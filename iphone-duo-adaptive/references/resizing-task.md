@@ -4,7 +4,7 @@
 
 ## Overview
 
-Use this task **only when Apple's `uikit-app-modernization` / App Resizability skill isn't available** (see `apple-skills-bridge.md`), or for SwiftUI code those skills don't cover. It removes assumptions that the app has one fixed screen, one orientation, or runs on a specific device.
+Use §1–8 **only when Apple's `uikit-app-modernization` / App Resizability skill isn't available** (see `apple-skills-bridge.md`), or for SwiftUI code those skills don't cover. **§9 (layout repairs) always applies**, in every mode. It removes assumptions that the app has one fixed screen, one orientation, or runs on a specific device.
 
 ## Detection
 
@@ -20,6 +20,7 @@ Use this task **only when Apple's `uikit-app-modernization` / App Resizability s
 | `safeAreaInsets.left * 2`, `.right * 2` | `symmetric-safe-area` |
 | `AppDelegate` with `window` and no `SceneDelegate` / `UIApplicationSceneManifest` | `app-lifecycle` |
 | `.scaleAspectFill` / `.aspectRatio(contentMode: .fill)` on hero media | `full-bleed` (review only) |
+| Sizes derived from width (`width / 2`, `aspectRatio(1, …)`, `containerRelativeFrame`) | `width-derived-size` (review → §9) |
 
 ## Patterns
 
@@ -90,7 +91,33 @@ let contentWidth = view.bounds.inset(by: view.safeAreaInsets).width
 Foreground controls stay inside the safe area; backgrounds may extend edge to edge (`.ignoresSafeArea()` / `backgroundView.frame = view.bounds`).
 
 ### 8. Full-bleed media
-For hero images/video using fill modes, choose fill vs. fit by aspect ratio or size class so important content isn't cropped on the wide outer display or the near-square inner display. Flag; change only with a decision.
+For hero images/video using fill modes, choose fill vs. fit by aspect ratio or size class so important content isn't cropped on the wide outer display or the near-square inner display. If it crops important content in a capture, it's a layout repair (§9); otherwise flag.
+
+### 9. Layout repairs (apply without a decision)
+
+An existing design that breaks at iPhone Duo sizes is a bug, not a design question. Repair it so the **same design** works at every size, and keep compact-width iPhones pixel-identical.
+
+Find them by reading layout code for sizes derived from width (`width / 2`, `aspectRatio(1, …)` on width-filling views, `containerRelativeFrame` fractions, `GeometryReader` math) and by checking baseline captures on the inner display (regular × regular, roughly 1.4:1) and in landscape.
+
+| Breakage | Repair |
+|---|---|
+| Element sized from width grows until it pushes the main content off screen (e.g. square header tiles at half width) | Cap its height/size (`.frame(maxHeight:)`, `min(width/2, cap)`) or switch the aspect ratio when the container is wide; compact layout unchanged |
+| Text or forms stretched across the inner display | Readable width: `.frame(maxWidth: 600)` centered, or `readableContentGuide` in UIKit |
+| Content cropped by fill mode | Choose fit vs. fill by the container's aspect ratio |
+| Fixed-size elements leave large empty areas | Let them flex (flexible frames, `GridItem(.adaptive)`), no new structure |
+| Controls under the fold or a camera | `reserved-regions-task.md` |
+| Zoom/scroll state that becomes invalid after a size change | Reset or clamp on size change |
+
+```swift
+// AVOID: square tiles at half the width — fine on iPhone, huge on the inner display
+HStack { SpendingTile(); PlacesTile() }
+    .frame(height: proxy.size.width / 2)
+// PREFER: same design, bounded
+HStack { SpendingTile(); PlacesTile() }
+    .frame(height: min(proxy.size.width / 2, 220))   // 220 ≥ today's largest iPhone value → compact unchanged
+```
+
+Choose caps at or above today's largest compact-iPhone value so normal iPhones don't change. Not a repair (needs a decision): moving content into a second column, new navigation, a sidebar, an arrangement.
 
 ## Implementation Gates
 

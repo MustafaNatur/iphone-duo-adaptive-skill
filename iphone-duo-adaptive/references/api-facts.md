@@ -51,21 +51,25 @@ find "$SDK/System/Library/Frameworks/SwiftUI.framework" -name "*.swiftinterface"
 
 ---
 
-## Vertical bars (iOS 27.1)
+## Vertical bars
 
-| Purpose | SwiftUI | UIKit |
-|---|---|---|
-| Opt a view out | `.toolbarVerticalBehavior(.disabled)` | `override var preferredVerticalBarBehavior: UIVerticalBarBehavior { .disabled }` |
-| Which edge (nil = none) | `@Environment(\.toolbarVerticalEdge)` | `traitCollection.verticalBarEdge` |
-| Compression | `.toolbarVerticalCompressionBehavior(.automatic / .prefersTabBar / .prefersToolbarItems)` | `UIVerticalBarCompressionBehavior` |
-| Item axis | `.axisBehavior(.horizontalOnly / .verticalPreferred)` (`ToolbarItemAxisBehavior`) | `UIBarButtonItem.axisBehavior` |
-| Overflow order | `.visibilityPriority(…)` (`ToolbarItemVisibilityPriority`, e.g. `.high`) | `UIBarButtonItem.visibilityPriority` (`UIBarButtonItemVisibilityPriority`) |
-| Put items in system overflow | `ToolbarOverflowMenu { … }` | `navigationItem.additionalOverflowItems` |
-| Prominent pinned action (Done) | `ToolbarItem(placement: .topBarPinnedTrailing)` | `navigationItem.pinnedTrailingGroup` |
-| Custom Back/Close | `ToolbarItem(placement: .cancellationAction)` | `navigationItem.leadingItemGroups` |
-| Groups | `ToolbarItemGroup` | `UIBarButtonItemGroup` |
-| Sheet placement (inner display) | `.presentationPlacement(_:)` | `UISheetPresentationController.preferredPlacement` |
-| Hero image under bar | `.backgroundExtensionEffect()` | `UIBackgroundExtensionView` |
+Availability below was checked against the installed iOS 27.0 SDK (`@available` in the SwiftUI `.swiftinterface`, `API_AVAILABLE` in UIKit headers). **Gate with the version in the column, not a blanket 27.1.** "27.1" = not in the 27.0 SDK (from Apple's 27.1 docs).
+
+| Purpose | SwiftUI | UIKit | Available |
+|---|---|---|---|
+| Opt a view out | `.toolbarVerticalBehavior(.disabled)` | `override var preferredVerticalBarBehavior: UIVerticalBarBehavior { .disabled }` | 27.1 |
+| Which edge (nil = none) | `@Environment(\.toolbarVerticalEdge)` | `traitCollection.verticalBarEdge` | 27.1 |
+| Compression | `.toolbarVerticalCompressionBehavior(.automatic / .prefersTabBar / .prefersToolbarItems)` | `UIVerticalBarCompressionBehavior` | 27.1 |
+| Item axis | `.axisBehavior(.horizontalOnly / .verticalPreferred)` (`ToolbarItemAxisBehavior`) | `UIBarButtonItem.axisBehavior` | 27.1 |
+| Overflow order | `.visibilityPriority(…)` (`ToolbarItemVisibilityPriority`, e.g. `.high`) | `UIBarButtonItem.visibilityPriority` (`UIBarButtonItemVisibilityPriority`) | **27.0** |
+| Put items in system overflow | `ToolbarOverflowMenu { … }` | `navigationItem.additionalOverflowItems` | **27.0** / UIKit 16.0 |
+| Prominent pinned action (Done) | `ToolbarItem(placement: .topBarPinnedTrailing)` | `navigationItem.pinnedTrailingGroup` | **27.0** / UIKit 16.0 |
+| Custom Back/Close | `ToolbarItem(placement: .cancellationAction)` | `navigationItem.leadingItemGroups` | long-standing |
+| Groups / spacing | `ToolbarItemGroup`, `ToolbarSpacer` (26.0) | `UIBarButtonItemGroup` | ≤ 26.0 |
+| Sheet placement (inner display) | `.presentationPlacement(_:)` (`PresentationPlacement`) | `UISheetPresentationController.preferredPlacement` | **27.0** |
+| Hero image under bar | `.backgroundExtensionEffect()` | `UIBackgroundExtensionView` | 26.0 |
+
+Before writing any of these, re-check the SDK you're building with (grep command at the top of this file); availability may differ in later SDKs.
 
 Item representation: vertical → icon; horizontal → icon or title (prefers icon); overflow → icon + title. **Title-only or custom-view items never go vertical** (unless `axisBehavior(.verticalPreferred)` on a custom view). Inspectors keep horizontal bars. Split views: sidebar/content horizontal, detail vertical. Sheets on the outer display: vertical by default.
 

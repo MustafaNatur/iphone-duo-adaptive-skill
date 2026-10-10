@@ -8,7 +8,7 @@ Each question must include:
 3. The code locations involved.
 4. Your recommendation and the reason, listed first and labeled **(Recommended)**.
 
-**Default** = what to do when nobody can answer. Record every answer in `DUO_DECISIONS.md` as *user* or *default*.
+**Default** = what to do when nobody can answer. Record every answer in `DuoAdaptive/DUO_DECISIONS.md` as *user* or *default*.
 
 ---
 
@@ -17,10 +17,10 @@ Each question must include:
 | Option | Meaning |
 |---|---|
 | **B (Recommended when interactive)** Readiness + inner-display improvements on the top screens | Mechanical fixes, then the per-screen questions below for 3–5 key screens |
-| A. Readiness only | Mechanical fixes and system-container adoption; no layout changes beyond filling space correctly |
+| A. Readiness only | Mechanical fixes, system-container adoption and layout repairs (broken layouts fixed, existing design kept); no redesigns |
 | C. Full design pass | Per-screen questions for every screen |
 
-Default: **A**.
+Default: **A** — which still includes all layout repairs. Never leave a layout you found broken.
 
 ## Q2. Deployment target & toolchain
 

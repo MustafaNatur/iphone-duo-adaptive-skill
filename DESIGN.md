@@ -13,6 +13,7 @@ _Last updated: 2026-10-10_
 3. **Build on Apple's skills; don't copy them.** If Xcode is present, the skill exports Apple's own skills at runtime and defers to them for everything they cover. It never bundles Apple content.
 4. **Verify everything.** Every change is compiled. Every screen is screenshotted in every pose before and after, and every API comes from a verified list. The skill never claims something was tested when it wasn't.
 5. **Stay in scope.** Make minimal diffs, prefer system containers, and never rewrite a working layout without a user decision.
+6. **Repair what's broken, ask about what's new.** An existing layout that breaks at iPhone Duo sizes is repaired in every mode, keeping the design. Redesigns need a decision. Normal iPhones never change without one, and orientation is never unlocked app-wide. (Added in v0.2 after benchmark round 1.)
 
 ---
 
@@ -24,8 +25,8 @@ _Last updated: 2026-10-10_
 | **1. Briefing** | Tell the user what will happen, roughly how long it takes, and which steps need them | Auto | — |
 | **2. Baseline capture** | Build, install and launch on the iPhone Duo simulator. Screenshot every screen on every display and pose (§5). | Auto, with user help for poses | Static audit only; mark poses as untested |
 | **3. Audit & inventory** | Scan for anti-patterns, inventory screens, navigation containers, toolbars and custom layouts, and list everything with file and line | Auto | — |
-| **4. Plan** | Write an editable plan (`DUO_PLAN.md`) with checkboxes: mechanical fixes, proposed design changes, open questions | Auto | — |
-| **5. Decision checkpoint(s)** | Ask the design questions (§4), showing current screenshots and 2–3 sketched alternatives per screen. The user approves the plan with **Run / Cancel**. | **User** | Apply the defaults and mark them as defaults in `DUO_DECISIONS.md` |
+| **4. Plan** | Write an editable plan (`DuoAdaptive/DUO_PLAN.md`) with checkboxes: mechanical fixes, proposed design changes, open questions | Auto | — |
+| **5. Decision checkpoint(s)** | Ask the design questions (§4), showing current screenshots and 2–3 sketched alternatives per screen. The user approves the plan with **Run / Cancel**. | **User** | Apply the defaults and mark them as defaults in `DuoAdaptive/DUO_DECISIONS.md` |
 | **6. Mechanical fixes** | Hand off general modernization to Apple's skills (UIScreen, orientation, scene lifecycle, safe areas). Then make the iPhone Duo–specific fixes, guarded with `#available` / SDK checks. | Auto | Apply them, since they're one-to-one replacements |
 | **7. Design implementation** | Implement the decisions: split views, arrangement views, sidebar, toolbar priorities, fold handling, camera, games | Auto | Only what the defaults allow; no new `ArrangementView` without a decision |
 | **8. Verification** | Rebuild, also at the minimum deployment target. Re-capture every pose, then build a before/after contact sheet. Check the file-coverage list. | Auto, with user help for poses | List what wasn't verified |

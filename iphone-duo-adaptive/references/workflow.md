@@ -2,7 +2,7 @@
 
 Read this file fully before Phase 0. Phases run in order. Keep a todo list with one item per phase and, from Phase 3 on, one item per flagged file.
 
-All artifacts go in `DuoAdaptive/` at the project root (create it; suggest adding it to `.gitignore` unless the user wants to keep it):
+All artifacts go in `DuoAdaptive/` at the project root. Don't commit it and don't put files in the project root. At the end, offer to move `DUO_DECISIONS.md` into the repo (e.g. `docs/`) if the user wants it under version control; suggest adding `DuoAdaptive/` to `.gitignore`:
 
 ```
 DuoAdaptive/
@@ -11,9 +11,9 @@ DuoAdaptive/
 ├── baseline/<pose>/<display>-<screen>.png
 ├── after/<pose>/<display>-<screen>.png
 ├── contact-sheet.html
-└── appstore/<display>-<orientation>-<n>.png
-DUO_PLAN.md        (project root, user-editable)
-DUO_DECISIONS.md   (project root, keep under version control)
+├── appstore/<display>-<orientation>-<n>.png
+├── DUO_PLAN.md        (user-editable plan)
+└── DUO_DECISIONS.md   (decision record)
 ```
 
 ---
@@ -60,8 +60,9 @@ Tell the user, in a few sentences:
 
 ## Phase 4: Plan
 
-Create `DUO_PLAN.md` from `assets/DUO_PLAN.template.md`:
+Create `DuoAdaptive/DUO_PLAN.md` from `assets/DUO_PLAN.template.md`:
 - **Mechanical fixes** — each finding, file:line, the planned replacement, and the task file that covers it.
+- **Layout repairs** — every existing layout that breaks in a baseline capture or by reading the code at regular width (inner display) or a near-square size: what breaks, the design-preserving repair, and proof that compact iPhones stay identical.
 - **Proposed design changes** — per screen, the recommended option and alternatives (these become questions).
 - **Open questions** — anything only the user can answer.
 - **Out of scope / not verifiable** — e.g. camera on hardware.
@@ -70,14 +71,15 @@ Create `DUO_PLAN.md` from `assets/DUO_PLAN.template.md`:
 
 1. Load `references/decisions.md`.
 2. Drop questions the evidence already answers (e.g. no camera code → no camera question). Ask the rest in batches of related questions, each with screenshots, sketched alternatives (ASCII or `contact-sheet.html`), code locations, and a recommendation.
-3. Record every answer in `DUO_DECISIONS.md` (from `assets/DUO_DECISIONS.template.md`) as **chosen by user** or **default**.
-4. Update `DUO_PLAN.md`, show the summary, and ask: **Run** (recommended) / **Edit the plan first** / **Cancel**. Change nothing before **Run**.
+3. Record every answer in `DuoAdaptive/DUO_DECISIONS.md` (from `assets/DUO_DECISIONS.template.md`) as **chosen by user** or **default**.
+4. Update `DuoAdaptive/DUO_PLAN.md`, show the summary, and ask: **Run** (recommended) / **Edit the plan first** / **Cancel**. Change nothing before **Run**.
 
-## Phase 6: Mechanical fixes
+## Phase 6: Mechanical fixes & layout repairs
 
 1. If Apple's `uikit-app-modernization` (or App Resizability) skill is available, run its tasks first, on this project, following its own rules.
 2. Then run each active task file from the registry in order, file by file. After each file: build, tick the todo item.
-3. Every new iPhone Duo API goes behind an availability guard (`availability.md`).
+3. Apply every layout repair from the plan (`resizing-task.md` §9). These are not optional and don't need a decision.
+4. Every new API goes behind an availability guard (`availability.md`, `api-facts.md`).
 
 ## Phase 7: Design implementation
 
@@ -86,7 +88,7 @@ Implement each recorded decision using `arrangement-task.md`, `vertical-bars-tas
 ## Phase 8: Verification
 
 1. Build at the current deployment target and run any existing unit/UI tests.
-2. If the project also builds for older iOS simulators, launch on one non-Duo iPhone simulator to confirm nothing regressed.
+2. **Normal-iPhone check:** re-read every diff hunk and confirm compact-width iPhones keep today's layout and behavior (orientation, navigation, sheets). If a non-Duo iPhone simulator is installed and it isn't the user's own in-use device, launch there and compare. Revert anything that changes normal iPhones without a decision.
 3. Recapture the same screens and poses into `DuoAdaptive/after/`.
 4. Run `python3 <skill>/scripts/contact_sheet.py DuoAdaptive/baseline DuoAdaptive/after -o DuoAdaptive/contact-sheet.html` and review every pair yourself before showing it.
 5. Reconcile the todo list: every flagged file ends as changed / already correct / TODO with reason / out of scope with reason.
@@ -97,4 +99,4 @@ Follow `references/app-store-assets.md`. Ask which screens to use (default: root
 
 ## Phase 10: Report
 
-Use the Report format in `SKILL.md`. Link `DUO_DECISIONS.md`, `DUO_PLAN.md`, the contact sheet, and the App Store folder.
+Use the Report format in `SKILL.md`. Link `DuoAdaptive/DUO_DECISIONS.md`, `DuoAdaptive/DUO_PLAN.md`, the contact sheet, and the App Store folder.

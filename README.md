@@ -4,7 +4,7 @@ An **interactive** agent skill for Claude Code and other agent-skill–compatibl
 
 The skill builds your app, screenshots it on the outer and inner displays in every pose, and asks you the design questions only you can answer. Then it makes the changes and proves they work.
 
-> **Status:** first version (0.1). The skill is written, and its scripts have been tested on sample code. It has **not yet been run end to end** against a real app on the iPhone Duo simulator, which needs Xcode 27.1. Expect rough edges, and please report them.
+> **Status:** version 0.2. The skill is written, and its scripts have been tested on sample code. It has **not yet been run end to end** against a real app on the iPhone Duo simulator, which needs Xcode 27.1. Expect rough edges, and please report them.
 
 ## What it does
 
@@ -30,7 +30,7 @@ The skill builds your app, screenshots it on the outer and inner displays in eve
 8. **Prepares App Store screenshots** for both displays and checks their sizes, format and transparency.
 9. **Reports** what changed, what was already correct, what you decided, any TODOs left, and what to test on a real device.
 
-Every answer is saved in `DUO_DECISIONS.md` in your project, so nothing gets redesigned silently. If nobody is around to answer (CI, headless runs, "just do it"), the skill uses safe defaults, marks them as defaults, and leaves clear TODOs.
+Every answer is saved in `DuoAdaptive/DUO_DECISIONS.md` in your project, so nothing gets redesigned silently. If nobody is around to answer (CI, headless runs, "just do it"), the skill still repairs layouts that are clearly broken on the big display. For anything that would be a redesign, it uses safe defaults, marks them as defaults, and leaves clear TODOs. Normal iPhones never change unless you decide they should.
 
 ## Inspired by Apple's own skills
 
@@ -70,6 +70,28 @@ Apple provides no command-line way to fold the iPhone Duo simulator. Only Device
 
 - macOS on Apple silicon with **Xcode 27.1** or later (needed for the iPhone Duo simulator and the iOS 27.1 SDK). Older Xcode versions work in a limited mode: code audit and fixes only.
 - An iOS project in UIKit, SwiftUI or both. Flutter, React Native and other cross-platform frameworks are out of scope.
+
+## Evaluation
+
+**Tessl skill review** (`tessl review run quality`, 2026-10-10):
+
+| Skill | Score |
+|---|---|
+| **This skill** | **100%** (5/5 on all 8 criteria, no validation warnings) |
+| mirzaaghazadeh/iphone-duo-skills | 93% for its main readiness skill; its 11 skills average 90.7% |
+| d-date/iphone-duo-skill | 89% |
+
+**Benchmark on a real production SwiftUI app.** The prompt was "Get my app ready for iPhone Duo. Make the changes in the code." Each run worked unattended on the iOS 27.0 SDK. Results were graded against 13 objective checks, and a separate blind reviewer ranked them as anonymous pull requests.
+
+| Run | Checks passed | Blind review | Notes |
+|---|---|---|---|
+| **This skill v0.2** | **13/13** | **1st, 42/50, merge as-is** | Builds; layout repairs; no change on normal iPhones |
+| No skill | 10/13 | 5th, 31/50 | Unlocked landscape on every iPhone |
+| This skill v0.1 | 12/13 | 3rd, 33/50 | Safe, but left a broken layout as a proposal |
+| d-date | 9/13 | 2nd, 36/50 | Unlocked landscape on every iPhone |
+| mirzaaghazadeh | 9/13 | 4th, 33/50 | Most ambitious; regressions on Plus/Pro Max phones |
+
+This is one app with one run per contestant, so treat the numbers as indicative. The interactive question flow and the simulator capture weren't exercised, because no user or Xcode 27.1 was available.
 
 ## Install
 

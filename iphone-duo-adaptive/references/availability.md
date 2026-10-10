@@ -2,7 +2,7 @@
 
 **SDK Version:** iOS 27.1
 
-iPhone Duo APIs (vertical bars, reserved regions, arrangements, hinge, scene accessories, direction coordinator) need the **iOS 27.1 SDK** to compile and **iOS 27.1** to run.
+iPhone Duo APIs (vertical bars, reserved regions, arrangements, hinge, scene accessories, direction coordinator) need the **iOS 27.1 SDK** to compile and **iOS 27.1** to run. A few related APIs (`visibilityPriority`, `ToolbarOverflowMenu`, `topBarPinnedTrailing`, `presentationPlacement`) are **iOS 27.0** — gate each API with the version in `api-facts.md`, confirmed against the SDK.
 
 ## Rules
 
@@ -73,4 +73,4 @@ Don't guess a `#if compiler(>=X)` version for the 27.1 toolchain; check `xcrun s
 
 ## Info.plist
 
-Don't add, remove or change `UIRequiresFullScreen`, `UISupportedInterfaceOrientations` or `UIApplicationSceneManifest` without the user's agreement. Scene-lifecycle migration belongs to Apple's `uikit-app-modernization` skill (or `resizing-task.md` §4).
+Don't add, remove or change `UIRequiresFullScreen`, `UISupportedInterfaceOrientations` or `UIApplicationSceneManifest` without the user's agreement. In particular, **don't unlock landscape app-wide to "support" iPhone Duo**: the inner display already ignores `supportedInterfaceOrientations`, so unlocking only changes every other iPhone. Make the layout work in landscape (the inner display will show it) and leave the setting alone. Scene-lifecycle migration belongs to Apple's `uikit-app-modernization` skill (or `resizing-task.md` §4).
