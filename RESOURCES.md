@@ -171,9 +171,10 @@ _Last updated: 2026-10-10. Apple URLs are relative to `https://developer.apple.c
 
 - **Xcode 27.1 RC** (first beta 27A9269 on 2026-09-18) — [Downloads](https://developer.apple.com/download/applications/) · [Xcode](https://developer.apple.com/xcode/). Requires Apple silicon Mac, macOS 26.6+.
 - **iPhone Duo simulator** in Device Hub — open/close/fold/rotate controls; hold ⌥ for a hinge-angle slider. Appears only with the iOS 27.1 runtime (Xcode → Settings → Components).
+- **Simulator command line** (details in [DESIGN.md §5](DESIGN.md#5-simulator-strategy)): `simctl create/boot/install/launch`; per-display screenshots `simctl io <udid> screenshot --display=primary|primary-1`; `devicectl device motion hinge-angle` (read-only); `devicectl device orientation set` (reported not to work on Duo — verify). **No Apple CLI, MCP tool or XCTest API folds the simulator** — only Device Hub's Closed / Book / Open toolbar.
 - **Resizable iOS simulator** (Xcode 27) and **SwiftUI preview resize handles**
 - **iPhone Mirroring** on macOS 27 — resize the window to extreme sizes
-- **Xcode's built-in agent skills** — export with `xcrun agent skills export --output-dir <dir>`. Xcode 27.0 exports `uikit-app-modernization` (UIScreen, orientation, scene lifecycle, safe areas) and `swiftui-whats-new-27` (incl. `references/toolbar.md`), among others. Snapshots in [reference/apple-xcode-skills/](reference/apple-xcode-skills/). Apple's prepare page names the 27.1 skill **"App Resizability"** (prompt: "get my app ready for iPhone Duo"); its content isn't published and the "formerly App Modernization" lineage is **unverified**. Our skill must complement, not duplicate, these.
+- **Xcode's built-in agent skills** — export with `xcrun agent skills export --output-dir <dir>`. Xcode 27.0 exports `uikit-app-modernization` (UIScreen, orientation, scene lifecycle, safe areas) and `swiftui-whats-new-27` (incl. `references/toolbar.md`), among others. Not redistributed here (Apple content) — the skill exports them at runtime. Apple's prepare page names the 27.1 skill **"App Resizability"** (prompt: "get my app ready for iPhone Duo"); its content isn't published and the "formerly App Modernization" lineage is **unverified**. Our skill must complement, not duplicate, these.
 - **Design kits**: [Apple Design Resources](https://developer.apple.com/design/resources/) (Figma + Sketch iPhone Duo kits)
 - **App Store Connect preview tool** — preview screenshots/metadata on iPhone Duo
 
@@ -226,12 +227,27 @@ _Last updated: 2026-10-10. Apple URLs are relative to `https://developer.apple.c
 - [BleepingSwift/iphone-duo-split-view-left-or-right](https://github.com/BleepingSwift/iphone-duo-split-view-left-or-right) — detecting which side of Split View the app is on
 - [TarunYadgirkar/duo-test](https://github.com/TarunYadgirkar/duo-test) — test app
 
-### Peer skills (review for differentiation before writing ours)
-- [mirzaaghazadeh/iphone-duo-skills](https://github.com/mirzaaghazadeh/iphone-duo-skills) (~149★, 2026-10-07)
-- [dogfooter8750/iphone-duo-skill](https://github.com/dogfooter8750/iphone-duo-skill)
-- Axiom `axiom-audit-resize` (tessl.io registry)
-- agensi.io "iPhone Duo Adaptivity Audit" (paid)
-- Apple's own Xcode skills — see §6 and [reference/apple-xcode-skills/](reference/apple-xcode-skills/)
+### Peer skills (surveyed 2026-10-10: ~30 standalone repos)
+| Repo | ★ | Notes |
+|---|---|---|
+| [mirzaaghazadeh/iphone-duo-skills](https://github.com/mirzaaghazadeh/iphone-duo-skills) | 149 | 11 skills, broadest scope (incl. Flutter/RN/Capacitor, App Store); static checklists; never compiled; inconsistent `UIViewReservedRegion` vs `UIView.ReservedRegion` |
+| [alexey1312/iPhone-Duo-Agent-Skill](https://github.com/alexey1312/iPhone-Duo-Agent-Skill) | 5 | Most rigorous: scanner, SDK-header check, drives simulator via `hinge`, cites talk timestamps; likely the same as the paid agensi.io "iPhone Duo Adaptivity Audit" |
+| [sven-ericmolzahn/iphone-duo-skill](https://github.com/sven-ericmolzahn/iphone-duo-skill) | 16 | `swiftc -typecheck` on samples, display-capture scripts; companion `iphone-duo-probe` |
+| [FloWritesCode/fwc-swiftui-skills](https://github.com/FloWritesCode/fwc-swiftui-skills) (`swiftui-iphone-duo`) | 400 (pack) | Good SwiftUI decision tree; no UIKit, no scripts |
+| [d-date/iphone-duo-skill](https://github.com/d-date/iphone-duo-skill) | 35 | Japanese; built from the Tech Talks + HIG; checklist |
+| [hechen/iphone-duo-skills](https://github.com/hechen/iphone-duo-skills) | 4 | 8 skills, test-plan template; Cursor/Copilot/Gemini support |
+| [dogfooter8750/iphone-duo-skill](https://github.com/dogfooter8750/iphone-duo-skill) | 1 | Audit script + cheatsheet; uses `UIViewReservedRegion` |
+| [CharlesWiltgen/Axiom](https://github.com/CharlesWiltgen/Axiom) (`axiom-audit-resize`) | 1.2k (pack) | Generic resize-readiness audit, not Duo-specific |
+| [AvdLee/SwiftUI-Agent-Skill](https://github.com/AvdLee/SwiftUI-Agent-Skill) | 3.7k (pack) | Duo reference PR #85 closed unmerged |
+| [EvanBacon/serve-sim](https://tessl.io/registry/skills/github/EvanBacon/serve-sim/serve-sim-duo-verification) | — | Duo verification skill for the simulator |
+
+Plus ~20 small generic, design-only or copy repos. No published Cursor rule pack, no Duo MCP server.
+Apple's own Xcode skills — see §6 (exported locally, not redistributed).
+
+### Simulator tooling (third-party, use with care)
+- [artemnovichkov/hinge](https://github.com/artemnovichkov/hinge) — CLI + skill to fold the iPhone Duo simulator / set the hinge angle (private Apple interfaces; unverified)
+- [skarol/duoctl](https://github.com/skarol/duoctl) — CLI to open/close/set hinge on the Duo simulator (private interfaces; unverified)
+- [Appium xcuitest-driver PR #3001](https://github.com/appium/appium-xcuitest-driver/pull/3001) · [Maestro PR #3621](https://github.com/mobile-dev-inc/Maestro/pull/3621) · [idb #965](https://github.com/facebook/idb/issues/965) — tooling issues with the Duo's two displays (taps landing on the outer screen when open)
 
 ---
 
