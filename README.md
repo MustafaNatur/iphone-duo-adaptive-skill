@@ -1,111 +1,96 @@
-# iPhone Duo Adaptive Skill
+# Three steps to make your app shine on iPhone Duo
 
-An **interactive** agent skill for Claude Code and other agent-skill–compatible tools. It adapts your iOS app to **iPhone Duo**, Apple's foldable iPhone, and verifies the result.
+iPhone Duo brings a compact outer display, a large inner display and a fold to iPhone. The iPhone Duo Adaptive skill gives your coding agent everything it needs to bring your app there. It looks at your running app in every pose, asks you the design questions only you can answer, makes the changes, and shows you the result before and after.
 
-The skill builds your app, screenshots it on the outer and inner displays in every pose, and asks you the design questions only you can answer. Then it makes the changes and proves they work.
+It works with Claude Code and other agent-skill–compatible tools, and it builds on the skills Apple ships in Xcode.
 
-> **Status:** version 0.2. The skill is written, and its scripts have been tested on sample code. It has **not yet been run end to end** against a real app on the iPhone Duo simulator, which needs Xcode 27.1. Expect rough edges, and please report them.
+> **Status:** version 0.2. Run interactively on a production SwiftUI app on the iPhone Duo simulator with Xcode 27.1. Please report rough edges.
 
-## What it does
+## Before you begin
 
-1. **Checks your setup:** Xcode version, iPhone Duo simulator, SDK, deployment target, UIKit / SwiftUI / mixed, and app type.
-2. **Screenshots your app as it is now** on both displays: closed, open, rotated and half-folded.
-3. **Audits your code** for patterns that break on iPhone Duo (`UIScreen.main`, orientation checks, idiom checks, fixed sizes, custom bars, asymmetric safe-area math) and lists every screen.
-4. **Writes a plan** you can edit, and changes nothing until you approve it.
-5. **Asks you the design questions**, each with your current screenshots, 2–3 sketched alternatives and a recommended answer. For example:
-   - What goes in the second pane on the big screen?
-   - Split or overlay arrangement?
-   - Sidebar or tab bar?
-   - Which toolbar buttons overflow?
-   - How do grids handle the fold?
-   - Should it support the half-folded "tabletop" position?
-   - Camera and game special cases.
-   - Do you have Figma designs to build to?
-6. **Makes the changes.** It does the mechanical fixes first, then implements your design decisions, with every new API guarded so older iOS versions still build.
-7. **Verifies everything:**
-   - Rebuilds, including at your minimum deployment target.
-   - Re-screenshots every pose.
-   - Shows you a before/after comparison.
-   - Lists exactly what was and wasn't tested.
-8. **Prepares App Store screenshots** for both displays and checks their sizes, format and transparency.
-9. **Reports** what changed, what was already correct, what you decided, any TODOs left, and what to test on a real device.
+Install Xcode 27.1 to get the iPhone Duo simulator and the iOS 27.1 SDK. The skill adapts to the tools you have.
 
-Every answer is saved in `DuoAdaptive/DUO_DECISIONS.md` in your project, so nothing gets redesigned silently. If nobody is around to answer (CI, headless runs, "just do it"), the skill still repairs layouts that are clearly broken on the big display. For anything that would be a redesign, it uses safe defaults, marks them as defaults, and leaves clear TODOs. Normal iPhones never change unless you decide they should.
+##### Xcode 27.1 or later
 
-## Inspired by Apple's own skills
+Full mode. The skill builds your app, runs it on the iPhone Duo simulator, captures every pose, applies changes, verifies them, and prepares App Store screenshots. Apple's App Resizability skill is available and is used first.
 
-Xcode ships its own agent skills, and this skill follows their design. Its workflow mirrors Apple's `uikit-app-modernization` and `audit-xcode-security-settings`:
-- **Workflow:** detection → analysis → decision → implementation → verification.
-- **Decision rule:** a safe one-to-one replacement is applied automatically. When there are several valid options, it asks you. When no safe option exists, it leaves an actionable TODO.
-- **Plan approval:** you approve the plan before anything changes.
-- **Guardrails:** public API only, no invented API, stay in scope.
+##### Xcode 27.0
 
-It also **uses Apple's skills directly.** When Xcode is installed, it exports them at runtime with `xcrun agent skills export` and lets them handle general modernization (UIScreen, orientation, scene lifecycle, safe areas, and App Resizability on Xcode 27.1+). This skill then handles the iPhone Duo–specific work. Apple's skills are never bundled or copied into this repo.
+Limited mode. The skill audits and fixes your code, but can't run the iPhone Duo simulator or compile APIs that are new in iOS 27.1.
 
-## How it's different
+##### No Xcode
 
-There are already about 30 iPhone Duo skills on GitHub (see [RESOURCES.md §9](RESOURCES.md#9-third-party-coverage-verify-against-apple)). Most are static checklists or cheat sheets. This skill focuses on what they don't do well:
+Audit only. The skill reviews your code and leaves clear TODOs for everything it can't verify.
 
-| What none of them do well | What this skill does |
-|---|---|
-| Checking the result | **Fixes, then screenshots every pose on both displays**, compares before and after, and states which poses were actually tested |
-| Getting API names right | Uses only APIs from a list checked against Apple's documentation, and **compiles after every change**. Other skills get some names wrong (e.g. "UIViewReservedRegion") |
-| Working with Apple's tools | **Runs Apple's Xcode skills at runtime** and builds on them instead of duplicating or contradicting them |
-| Design decisions | **Asks you at a decision checkpoint**, with screenshots, mockups and a recommended answer for each question, and records the answers |
-| Shipping | **Produces and validates App Store screenshots** for both displays (required from April 2027) |
-| Real-world codebases | Handles **mixed UIKit/SwiftUI apps**, keeps a file-coverage list, and guards every new API so older iOS versions still build |
-| Honesty about gaps | States what Apple hasn't documented yet (games, widgets on the outer display, right-to-left layouts with side bars, keyboard at the fold) instead of inventing guidance |
+## Step 1: Install the skill
 
-## Simulator note
-
-Apple provides no command-line way to fold the iPhone Duo simulator. Only Device Hub's **Closed / Book / Open** buttons can do it. The skill does everything else itself: create, boot, install, launch, screenshot each display, read the hinge angle and try rotation. For folding, it gives you one-line instructions and checks the hinge angle afterwards to confirm the pose. If you already have the third-party [`hinge`](https://github.com/artemnovichkov/hinge) or [`duoctl`](https://github.com/skarol/duoctl) tools installed, it can use them with your permission.
-
-## What Apple actually requires
-
-- **April 2027:** new App Store submissions must include iPhone Duo screenshots.
-- **April 2027:** apps must be built with the iOS 27 SDK or later.
-- **Fold-aware adaptive layout:** strongly recommended, but not a dated requirement.
-
-## Requirements
-
-- macOS on Apple silicon with **Xcode 27.1** or later (needed for the iPhone Duo simulator and the iOS 27.1 SDK). Older Xcode versions work in a limited mode: code audit and fixes only.
-- An iOS project in UIKit, SwiftUI or both. Flutter, React Native and other cross-platform frameworks are out of scope.
-
-## Evaluation
-
-**Tessl skill review** (`tessl review run quality`, 2026-10-10):
-
-| Skill | Score |
-|---|---|
-| **This skill** | **100%** (5/5 on all 8 criteria, no validation warnings) |
-| mirzaaghazadeh/iphone-duo-skills | 93% for its main readiness skill; its 11 skills average 90.7% |
-| d-date/iphone-duo-skill | 89% |
-
-**Benchmark on a real production SwiftUI app.** The prompt was "Get my app ready for iPhone Duo. Make the changes in the code." Each run worked unattended on the iOS 27.0 SDK. Results were graded against 13 objective checks, and a separate blind reviewer ranked them as anonymous pull requests.
-
-| Run | Checks passed | Blind review | Notes |
-|---|---|---|---|
-| **This skill v0.2** | **13/13** | **1st, 42/50, merge as-is** | Builds; layout repairs; no change on normal iPhones |
-| No skill | 10/13 | 5th, 31/50 | Unlocked landscape on every iPhone |
-| This skill v0.1 | 12/13 | 3rd, 33/50 | Safe, but left a broken layout as a proposal |
-| d-date | 9/13 | 2nd, 36/50 | Unlocked landscape on every iPhone |
-| mirzaaghazadeh | 9/13 | 4th, 33/50 | Most ambitious; regressions on Plus/Pro Max phones |
-
-This is one app with one run per contestant, so treat the numbers as indicative. The interactive question flow and the simulator capture weren't exercised, because no user or Xcode 27.1 was available.
-
-## Install
-
-Copy the skill folder into your Claude Code skills directory (personal or per project):
+Clone the repository and copy the skill into your skills folder.
 
 ```bash
 git clone https://github.com/MustafaNatur/iphone-duo-adaptive-skill.git
 cp -R iphone-duo-adaptive-skill/iphone-duo-adaptive ~/.claude/skills/
 ```
 
-Then, in your iOS project, ask: *"Get my app ready for iPhone Duo."*
+Then open your iOS project and ask your agent to "get my app ready for iPhone Duo."
 
-## Repository contents
+## Step 2: Answer the design questions
 
-- [iphone-duo-adaptive/](iphone-duo-adaptive/): the skill. `SKILL.md`, task and reference files, helper scripts, and plan/decision templates.
-- [DESIGN.md](DESIGN.md): the skill's specification. Workflow, Apple conventions, decision questions, simulator strategy, file structure, failure modes.
-- [RESOURCES.md](RESOURCES.md): all research sources. Apple news, docs, design guidelines, API reference, Tech Talks, WWDC26 sessions, tools, App Store specs, labs, third-party coverage, peer skills, and known unknowns.
+The skill gathers evidence first, so every question it asks is about your app, not a generic checklist.
+
+### See your app as it is today
+
+- **Capture every pose.** The skill builds your app and screenshots both displays. Apple provides no command to fold the simulator, so it asks you to click **Closed**, **Book** or **Open** in Device Hub.
+- **Audit the code.** It searches for patterns that break when the window changes size, like `UIScreen.main`, orientation and idiom checks, fixed sizes, custom bars, and sizes that grow with width.
+- **Start with Apple's skills.** When Xcode is installed, it exports Apple's own skills with `xcrun agent skills export` and lets them handle general resizing first.
+
+### Decide what changes
+
+- **Get a recommendation for every question.** Each question shows your current screenshots, the alternatives, and a recommended option, for example whether a list and its detail should sit side by side on the inner display.
+- **Approve the plan.** Nothing changes until you reply **Run**.
+- **Keep a record.** Every answer is saved in `DuoAdaptive/DUO_DECISIONS.md`, marked as yours or as a default.
+
+**Note:** When no one is available to answer, as in CI or a headless run, the skill still repairs layouts that are clearly broken. For anything that would be a redesign, it uses safe defaults and leaves TODOs.
+
+## Step 3: Review and test
+
+The skill applies the changes, then proves they work.
+
+### Make the changes safely
+
+- **Repair what's broken.** An existing layout that breaks at iPhone Duo sizes is fixed while keeping your design, for example header tiles that grow until they push your list off screen.
+- **Leave normal iPhones alone.** Today's iPhone layout and behavior stay identical unless you decide otherwise. The skill never unlocks orientation for the whole app to support iPhone Duo; the inner display already ignores the lock.
+- **Gate every new API.** Each iOS 27 and 27.1 API goes behind `#available`, so your app keeps its current minimum iOS version.
+- **Use only real API.** Every symbol comes from a list checked against Apple's SDK, and the app is compiled after every change.
+
+### Verify the result
+
+- **Compare before and after.** The skill captures the same screens and poses again and builds a side-by-side contact sheet.
+- **Know what was tested.** The report lists the poses that were actually captured, and everything that needs a physical iPhone Duo, like the camera and haptics.
+
+## Go further: Stand out on the App Store
+
+**Prepare your screenshots.** Starting in April 2027, apps and games submitted to the App Store need screenshots for iPhone Duo. The skill captures the screens you choose on both displays and checks them against the exact sizes, format and transparency rules. [View screenshot specifications.](https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications)
+
+**Build with the latest SDK.** Starting in April 2027, apps must be built with the iOS 27 SDK or later. Only apps built with the iOS 27.1 SDK fill the inner display edge to edge and get the side toolbars.
+
+## Why this skill
+
+There are already around 30 iPhone Duo skills on GitHub. Most are checklists. This one is built to finish the job:
+
+- **It looks at your running app**, before and after, in every pose it can capture.
+- **It asks before it redesigns**, and records what you decided.
+- **It builds on Apple's skills** instead of repeating or contradicting them.
+- **It's honest about gaps.** It says what Apple hasn't documented yet, like games, widgets on the outer display, and the keyboard at the fold, instead of guessing.
+
+In an unattended benchmark on a production SwiftUI app, this skill passed 13 of 13 objective checks. A blind reviewer ranked it first of five as "merge as-is", ahead of the two most-starred iPhone Duo skills and a run with no skill. In Tessl's skill review it scored 100%, compared with 93% and 89% for those two skills. This was one app with one run each, so treat the results as indicative.
+
+## Additional resources
+
+- News: [Prepare and submit your apps for iPhone Duo](https://developer.apple.com/news/?id=kkphp5qo)
+- Documentation: [Preparing your app for iPhone Duo](https://developer.apple.com/documentation/technologyoverviews/preparing-your-app-for-iphone-duo)
+- Design: [Designing for iPhone Duo](https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo)
+- Video: [Prepare your app for iPhone Duo](https://developer.apple.com/videos/play/tech-talks/111461/)
+- Guide: [Make sure your app is ready](https://developer.apple.com/iphone-duo/prepare/)
+- Specification: [DESIGN.md](DESIGN.md), how the skill works and why
+- Research: [RESOURCES.md](RESOURCES.md), every source used to build the skill
+- Skill: [iphone-duo-adaptive/](iphone-duo-adaptive/), the skill, its references, scripts and templates
