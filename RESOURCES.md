@@ -14,6 +14,7 @@ _Last updated: 2026-10-10. Apple URLs are relative to `https://developer.apple.c
 |---|---|---|---|
 | 2026-09-09 | iPhone Duo developer resources open | — | [Get ready for iPhone Duo](https://developer.apple.com/news/?id=vn8abkxx) |
 | 2026-09-18 | Xcode 27.1 beta (27A9269) with iPhone Duo simulator | — | [Build for iPhone Duo with new resources](https://developer.apple.com/news/?id=nyuppv9r) |
+| 2026-10 | Xcode 27.1 **RC** available | — | [Xcode 27.1 release notes](https://developer.apple.com/documentation/xcode-release-notes/xcode-27_1-release-notes) |
 | 2026-10-05 | App Store accepts iPhone Duo–optimized apps (built with Xcode 27.1) | — | [Prepare and submit your apps for iPhone Duo](https://developer.apple.com/news/?id=kkphp5qo) |
 | 2026-10-16 | Pre-orders open | — | press coverage (§9) |
 | 2026-10-23 | iPhone Duo on sale, iOS 27.1 | — | [Prepare and submit…](https://developer.apple.com/news/?id=kkphp5qo) |
@@ -36,9 +37,10 @@ _Last updated: 2026-10-10. Apple URLs are relative to `https://developer.apple.c
 - [Get ready for iPhone Duo](https://developer.apple.com/news/?id=vn8abkxx) — 2026-09-09
 - [App Store submissions now open for the latest OS releases](https://developer.apple.com/news/?id=k1mtkt1k) — 2026-09-09 (April 2027 SDK rule)
 - [Get ready with the latest beta releases](https://developer.apple.com/news/?id=rfb1rooi) — 2026-09-16 (iOS 27.1 beta)
-- [Get your subscriptions ready for iOS 27](https://developer.apple.com/news/?id=likeohx4) — 2026-09-16 (adjacent)
 - [Build for iPhone Duo with new resources](https://developer.apple.com/news/?id=nyuppv9r) — 2026-09-18 (Xcode 27.1 beta, Figma/Sketch kits, workshops)
 - [Prepare and submit your apps for iPhone Duo](https://developer.apple.com/news/?id=kkphp5qo) — 2026-10-05 (submissions open, April 2027 screenshot rule)
+- [Showcase your apps with new assets on the App Store](https://developer.apple.com/news/?id=ljpl7kyn) — 2026-10-05 (new product-page assets)
+- [Hello Developer: October 2026](https://developer.apple.com/news/?id=gv788oj6) → [/hello/october26/](https://developer.apple.com/hello/october26/) — group labs round 2, on-demand recap, [forums highlights thread](https://developer.apple.com/forums/thread/847644)
 - [Upcoming requirements](https://developer.apple.com/news/upcoming-requirements/) — watch this page for changes
 
 ---
@@ -55,6 +57,10 @@ _Last updated: 2026-10-10. Apple URLs are relative to `https://developer.apple.c
 
 ## 4. Apple documentation
 
+### Complete API inventory (start here when writing the skill)
+- [SwiftUI updates](https://developer.apple.com/documentation/updates/swiftui) and [UIKit updates](https://developer.apple.com/documentation/updates/uikit) — Apple's authoritative list of every iOS 27 / 27.1 API (arrangement views, reserved regions, hinge, scene accessories, vertical-axis controls)
+- Note: Apple publishes **no iOS 27.1 release notes** (only iOS 27 and 27.2 beta); and the [sample code index](https://developer.apple.com/documentation/samplecode) has **no iPhone Duo sample** yet.
+
 ### Overviews & guides
 - [Preparing your app for iPhone Duo](https://developer.apple.com/documentation/technologyoverviews/preparing-your-app-for-iphone-duo) — **primary technical doc**
 - [Designing for iPhone Duo (HIG)](https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo) — **primary design doc** (new page 2026-09-09)
@@ -66,6 +72,19 @@ _Last updated: 2026-10-10. Apple URLs are relative to `https://developer.apple.c
 - [Choosing a camera by the direction it faces](https://developer.apple.com/documentation/avkit/choosing-a-camera-by-the-direction-it-faces)
 - [Registering a camera capture accessory on iPhone Duo](https://developer.apple.com/documentation/avfoundation/registering-a-camera-capture-accessory-on-iphone-duo)
 
+### Scene lifecycle & multiwindow (prerequisite for resizing)
+- [TN3187: Migrating to the UIKit scene-based life cycle](https://developer.apple.com/documentation/technotes/tn3187-migrating-to-the-uikit-scene-based-life-cycle)
+- [Specifying the scenes your app supports](https://developer.apple.com/documentation/uikit/specifying-the-scenes-your-app-supports)
+- [UIApplicationSupportsMultipleScenes](https://developer.apple.com/documentation/bundleresources/information-property-list/uiapplicationscenemanifest/uiapplicationsupportsmultiplescenes)
+- [UIRequiresFullScreen](https://developer.apple.com/documentation/bundleresources/information-property-list/uirequiresfullscreen) — doc page only describes iPad; iOS 27 iPhone behaviour is in WWDC26 session 278 (see §10)
+- [UIWindowScene.ActivationAction](https://developer.apple.com/documentation/uikit/uiwindowscene/activationaction) (iOS 15+, not Duo-specific; on Duo new windows open only on the inner display)
+
+### Apple sample code (related, not Duo-specific)
+- [Bringing multiple windows to your SwiftUI app](https://developer.apple.com/documentation/swiftui/bringing-multiple-windows-to-your-swiftui-app)
+- [Supporting multiple windows on iPad](https://developer.apple.com/documentation/uikit/supporting-multiple-windows-on-ipad)
+- [Supporting device rotation in your camera app](https://developer.apple.com/documentation/avfoundation/supporting-device-rotation-in-your-camera-app)
+- [Adjusting your layout with keyboard layout guide](https://developer.apple.com/documentation/uikit/adjusting-your-layout-with-keyboard-layout-guide)
+
 ### Xcode & testing
 - [Device Hub](https://developer.apple.com/documentation/xcode/device-hub)
 - [Running your app on simulated or physical devices](https://developer.apple.com/documentation/xcode/running-your-app-on-simulated-or-physical-devices)
@@ -74,24 +93,27 @@ _Last updated: 2026-10-10. Apple URLs are relative to `https://developer.apple.c
 - [Capturing screenshots and videos from devices](https://developer.apple.com/documentation/xcode/capturing-screenshots-and-videos-from-devices)
 - [Interacting with devices using the command line](https://developer.apple.com/documentation/xcode/interacting-with-devices-using-the-command-line)
 - [Xcode 27.1 release notes](https://developer.apple.com/documentation/xcode-release-notes/xcode-27_1-release-notes) — known iPhone Duo simulator issues: slow first launch, no StandBy, most app extensions can't run/debug
-- [iOS & iPadOS release notes](https://developer.apple.com/documentation/ios-ipados-release-notes)
+- [iOS & iPadOS release notes](https://developer.apple.com/documentation/ios-ipados-release-notes) (no 27.1 entry exists)
 
 ### API reference — layout & resizing
 | Concept | SwiftUI | UIKit |
 |---|---|---|
 | Size classes | [horizontalSizeClass](https://developer.apple.com/documentation/swiftui/environmentvalues/horizontalsizeclass) / [verticalSizeClass](https://developer.apple.com/documentation/swiftui/environmentvalues/verticalsizeclass) | [horizontalSizeClass](https://developer.apple.com/documentation/uikit/uitraitcollection/horizontalsizeclass) / [verticalSizeClass](https://developer.apple.com/documentation/uikit/uitraitcollection/verticalsizeclass) |
 | Safe area | [GeometryProxy.safeAreaInsets](https://developer.apple.com/documentation/swiftui/geometryproxy/safeareainsets) | [UIView.safeAreaInsets](https://developer.apple.com/documentation/uikit/uiview/safeareainsets) |
-| Geometry | [GeometryReader](https://developer.apple.com/documentation/swiftui/geometryreader), [GeometryProxy](https://developer.apple.com/documentation/swiftui/geometryproxy) | `view.bounds`, `viewWillTransition(to:with:)` |
+| Geometry | [GeometryReader](https://developer.apple.com/documentation/swiftui/geometryreader), [GeometryProxy](https://developer.apple.com/documentation/swiftui/geometryproxy), [onGeometryChange(for:of:action:)](https://developer.apple.com/documentation/swiftui/view/ongeometrychange(for:of:action:)) | `view.bounds`, `viewWillTransition(to:with:)` |
+| Windows | — | [UIWindow(windowScene:)](https://developer.apple.com/documentation/uikit/uiwindow/init(windowscene:)) instead of `UIWindow(frame: UIScreen.main.bounds)`; `view.window?.windowScene?.screen` |
+| Corners | [ConcentricRectangle](https://developer.apple.com/documentation/swiftui/concentricrectangle) | [UICornerConfiguration](https://developer.apple.com/documentation/uikit/uicornerconfiguration-swift.struct) |
 | Display scale | [displayScale](https://developer.apple.com/documentation/swiftui/environmentvalues/displayscale) | `traitCollection.displayScale` |
 | Don't use for layout | — | [userInterfaceIdiom](https://developer.apple.com/documentation/uikit/uidevice/userinterfaceidiom), [UIInterfaceOrientation](https://developer.apple.com/documentation/uikit/uiinterfaceorientation), `UIScreen.main` |
 
 ### API reference — reserved regions (fold & cameras), iOS 27.1
-- SwiftUI: [ReservedRegion](https://developer.apple.com/documentation/swiftui/reservedregion) · [reservedRegions(kind:options:layoutDirectionBehavior:)](https://developer.apple.com/documentation/swiftui/geometryproxy/reservedregions(kind:options:layoutdirectionbehavior:)) · [ReservedRegion.Kind](https://developer.apple.com/documentation/swiftui/reservedregion/kind-swift.struct) · [QueryOptions](https://developer.apple.com/documentation/swiftui/reservedregion/queryoptions) · [LayoutDirectionBehavior.fixed](https://developer.apple.com/documentation/swiftui/layoutdirectionbehavior/fixed)
-- UIKit: [UIView.ReservedRegion](https://developer.apple.com/documentation/uikit/uiview/reservedregion) · [reservedRegions(kind:options:)](https://developer.apple.com/documentation/uikit/uiview/reservedregions(kind:options:))
+- SwiftUI: [ReservedRegion](https://developer.apple.com/documentation/swiftui/reservedregion) · [reservedRegions(kind:options:layoutDirectionBehavior:)](https://developer.apple.com/documentation/swiftui/geometryproxy/reservedregions(kind:options:layoutdirectionbehavior:)) · [ReservedRegion.Kind](https://developer.apple.com/documentation/swiftui/reservedregion/kind-swift.struct) · [QueryOptions](https://developer.apple.com/documentation/swiftui/reservedregion/queryoptions) · [includeInactive](https://developer.apple.com/documentation/swiftui/reservedregion/queryoptions/includeinactive) · [ReservedRegion.ID](https://developer.apple.com/documentation/swiftui/reservedregion/id-swift.struct) · [LayoutDirectionBehavior.fixed](https://developer.apple.com/documentation/swiftui/layoutdirectionbehavior/fixed)
+- UIKit: [UIView.ReservedRegion](https://developer.apple.com/documentation/uikit/uiview/reservedregion) (blogs sometimes misspell it "UIViewReservedRegion") · [reservedRegions(kind:options:)](https://developer.apple.com/documentation/uikit/uiview/reservedregions(kind:options:))
 - Kinds: `.division` (fold, active only when partially open) and `.occlusion` (outer camera always; inner camera when active). Use `.includeInactive` for high-level decisions (e.g. even grid columns).
 
 ### API reference — arrangement views, iOS 27.1
-- SwiftUI: [ArrangementView](https://developer.apple.com/documentation/swiftui/arrangementview) · [arrangementViewStyle(_:)](https://developer.apple.com/documentation/swiftui/view/arrangementviewstyle(_:)) · [SplitArrangementViewStyle](https://developer.apple.com/documentation/swiftui/splitarrangementviewstyle) · [OverlayArrangementViewStyle](https://developer.apple.com/documentation/swiftui/overlayarrangementviewstyle) · [AutomaticArrangementViewStyle](https://developer.apple.com/documentation/swiftui/automaticarrangementviewstyle) · [ArrangementViewStyle](https://developer.apple.com/documentation/swiftui/arrangementviewstyle) · [overlayArrangementEdge(_:)](https://developer.apple.com/documentation/swiftui/view/overlayarrangementedge(_:)) · [splitArrangementLayoutRatio(_:)](https://developer.apple.com/documentation/swiftui/view/splitarrangementlayoutratio(_:)) · [splitArrangementFixedLayoutSize](https://developer.apple.com/documentation/swiftui/view/splitarrangementfixedlayoutsize(horizontal:vertical:))
+- SwiftUI: [ArrangementView](https://developer.apple.com/documentation/swiftui/arrangementview) · [arrangementViewStyle(_:)](https://developer.apple.com/documentation/swiftui/view/arrangementviewstyle(_:)) · [SplitArrangementViewStyle](https://developer.apple.com/documentation/swiftui/splitarrangementviewstyle) · [OverlayArrangementViewStyle](https://developer.apple.com/documentation/swiftui/overlayarrangementviewstyle) · [AutomaticArrangementViewStyle](https://developer.apple.com/documentation/swiftui/automaticarrangementviewstyle) · [ArrangementViewStyle](https://developer.apple.com/documentation/swiftui/arrangementviewstyle) · [overlayArrangementEdge(_:)](https://developer.apple.com/documentation/swiftui/view/overlayarrangementedge(_:)) · [splitArrangementLayoutRatio(_:)](https://developer.apple.com/documentation/swiftui/view/splitarrangementlayoutratio(_:)) · [splitArrangementFixedLayoutSize](https://developer.apple.com/documentation/swiftui/view/splitarrangementfixedlayoutsize(horizontal:vertical:)) · [splitArrangementLayoutSize(…)](https://developer.apple.com/documentation/swiftui/view/splitarrangementlayoutsize(minwidth:idealwidth:maxwidth:minheight:idealheight:maxheight:)) · [splitArrangementAxis](https://developer.apple.com/documentation/swiftui/environmentvalues/splitarrangementaxis) (env) · [overlayArrangementZIndex](https://developer.apple.com/documentation/swiftui/environmentvalues/overlayarrangementzindex) (env)
+- UIKit extras: [UIViewController.arrangementViewController](https://developer.apple.com/documentation/uikit/uiviewcontroller/arrangementviewcontroller) · [UISplitArrangement.Dimension](https://developer.apple.com/documentation/uikit/uisplitarrangement-swift.struct/dimension) · [UIArrangementViewController.Arrangement](https://developer.apple.com/documentation/uikit/uiarrangementviewcontroller/arrangement) · [ViewPlacement](https://developer.apple.com/documentation/uikit/uiarrangementviewcontroller/viewplacement)
 - UIKit: [UIArrangementViewController](https://developer.apple.com/documentation/uikit/uiarrangementviewcontroller) · [UISplitArrangement](https://developer.apple.com/documentation/uikit/uisplitarrangement-swift.struct) · [UIOverlayArrangement](https://developer.apple.com/documentation/uikit/uioverlayarrangement-swift.struct) · [updateArrangement(_:animated:)](https://developer.apple.com/documentation/uikit/uiarrangementviewcontroller/updatearrangement(_:animated:)) · [setViewController(_:for:animated:)](https://developer.apple.com/documentation/uikit/uiarrangementviewcontroller/setviewcontroller(_:for:animated:)) · [state(for:)](https://developer.apple.com/documentation/uikit/uiarrangementviewcontroller/state(for:))
 - Rules: don't nest navigation containers inside; don't put inside List/ScrollView/NavigationSplitView.
 
@@ -112,11 +134,11 @@ _Last updated: 2026-10-10. Apple URLs are relative to `https://developer.apple.c
 | Containers | [NavigationStack](https://developer.apple.com/documentation/swiftui/navigationstack), [NavigationSplitView](https://developer.apple.com/documentation/swiftui/navigationsplitview), [toolbar(content:)](https://developer.apple.com/documentation/swiftui/view/toolbar(content:)) | [UISplitViewController](https://developer.apple.com/documentation/uikit/uisplitviewcontroller), `UINavigationController`, `UITabBarController` (avoid standalone [UIToolbar](https://developer.apple.com/documentation/uikit/uitoolbar) / [UINavigationBar](https://developer.apple.com/documentation/uikit/uinavigationbar) / [UITabBar](https://developer.apple.com/documentation/uikit/uitabbar)) |
 
 ### API reference — hinge, scenes, accessories, camera
-- Hinge (live effects only, not layout): `onHingeChange` (SwiftUI), `UIHingeInteraction` (UIKit) — status `.closed` / `.partiallyOpen` / `.fullyOpen` + `angle`
-- Scenes: `UIWindowSceneActivationAction` (new windows only on the inner display; handle request errors), [UISceneAccessory](https://developer.apple.com/documentation/uikit/uisceneaccessory), `.sceneAccessory { CameraCaptureAccessory(isEnabled:) { … } .onAvailabilityChange { … } }`, session role [windowCameraCaptureAccessory](https://developer.apple.com/documentation/uikit/uiscenesession/role-swift.struct/windowcameracaptureaccessory)
-- Camera: [AVCaptureDeviceDirectionCoordinator](https://developer.apple.com/documentation/avkit/avcapturedevicedirectioncoordinator) · [AVCaptureDeviceDirectionMap](https://developer.apple.com/documentation/avkit/avcapturedevicedirectionmap) · [builtInOuterUltraWideCamera](https://developer.apple.com/documentation/avfoundation/avcapturedevice/devicetype-swift.struct/builtinouterultrawidecamera) · [builtInInnerUltraWideCamera](https://developer.apple.com/documentation/avfoundation/avcapturedevice/devicetype-swift.struct/builtininnerultrawidecamera) · [activePrimaryConstituent](https://developer.apple.com/documentation/avfoundation/avcapturedevice/activeprimaryconstituent) · `AVCaptureDeviceRotationCoordinator` · `dynamicAspectRatio`
+- Hinge (live effects only, never layout): SwiftUI [onHingeChange(isEnabled:_:)](https://developer.apple.com/documentation/swiftui/view/onhingechange(isenabled:_:)) → closure gets old/new [DeviceHingeContext](https://developer.apple.com/documentation/swiftui/devicehingecontext); `context.hinge` ([DeviceHinge](https://developer.apple.com/documentation/swiftui/devicehinge)) is `nil` on hinge-less devices; `status` `.closed` / `.partiallyOpen` / `.fullyOpen` + `angle`. UIKit [UIHingeInteraction](https://developer.apple.com/documentation/uikit/uihingeinteraction) · [UIHinge](https://developer.apple.com/documentation/uikit/uihinge)
+- Scenes: [UIWindowScene.ActivationAction](https://developer.apple.com/documentation/uikit/uiwindowscene/activationaction) (new windows only on the inner display; handle request errors)
+- Scene accessories: SwiftUI [sceneAccessory(content:)](https://developer.apple.com/documentation/swiftui/view/sceneaccessory(content:)) + [CameraCaptureAccessory](https://developer.apple.com/documentation/swiftui/cameracaptureaccessory) (`isEnabled:`, `.onAvailabilityChange`); UIKit [registerSceneAccessory(_:)](https://developer.apple.com/documentation/uikit/uiviewcontroller/registersceneaccessory(_:)) · [UISceneAccessory](https://developer.apple.com/documentation/uikit/uisceneaccessory) · session role [windowCameraCaptureAccessory](https://developer.apple.com/documentation/uikit/uiscenesession/role-swift.struct/windowcameracaptureaccessory)
+- Camera: [AVCaptureDeviceDirectionCoordinator](https://developer.apple.com/documentation/avkit/avcapturedevicedirectioncoordinator) · [AVCaptureDeviceDirectionMap](https://developer.apple.com/documentation/avkit/avcapturedevicedirectionmap) · [builtInOuterUltraWideCamera](https://developer.apple.com/documentation/avfoundation/avcapturedevice/devicetype-swift.struct/builtinouterultrawidecamera) · [builtInInnerUltraWideCamera](https://developer.apple.com/documentation/avfoundation/avcapturedevice/devicetype-swift.struct/builtininnerultrawidecamera) · [activePrimaryConstituent](https://developer.apple.com/documentation/avfoundation/avcapturedevice/activeprimaryconstituent) · [AVCaptureDevice.RotationCoordinator](https://developer.apple.com/documentation/avfoundation/avcapturedevice/rotationcoordinator) · `dynamicAspectRatio`
 - Navigation: `TabView` + `.defaultTabBarPlacement(.sidebar)`; UIKit `tabBarController.sidebar.preferredPlacement`
-- Corners: `ConcentricRectangle` (SwiftUI), `UICornerConfiguration` (UIKit)
 
 ---
 
@@ -137,20 +159,8 @@ _Last updated: 2026-10-10. Apple URLs are relative to `https://developer.apple.c
 - [iPhone Duo Group Lab — Day 2](https://developer.apple.com/videos/play/meet-with-apple/286/)
 
 ### Related WWDC26 sessions
-- [Modernize your UIKit app](https://developer.apple.com/videos/play/wwdc2026/278/) — resizable iPhone apps, `UIRequiresFullScreen` changes, scene geometry
-- [What's new in SwiftUI](https://developer.apple.com/videos/play/wwdc2026/269/)
-- [Use SwiftUI with AppKit and UIKit](https://developer.apple.com/videos/play/wwdc2026/272/)
-- [Dive into lazy stacks and scrolling with SwiftUI](https://developer.apple.com/videos/play/wwdc2026/321/)
-- [Get the most out of Device Hub](https://developer.apple.com/videos/play/wwdc2026/260/)
-- [What's new in Xcode 27](https://developer.apple.com/videos/play/wwdc2026/258/)
-- [Xcode, agents, and you](https://developer.apple.com/videos/play/wwdc2026/259/)
-- [Create UI prototypes using agents in Xcode](https://developer.apple.com/videos/play/wwdc2026/227/)
-- [Build a responsive camera app that launches quickly](https://developer.apple.com/videos/play/wwdc2026/303/)
-- [Implement high resolution photo capture](https://developer.apple.com/videos/play/wwdc2026/304/)
-- [Support the Center Stage front camera in your iOS app](https://developer.apple.com/videos/play/wwdc2026/341/)
-- [Enhance your presence on the App Store](https://developer.apple.com/videos/play/wwdc2026/205/)
-- [Modernize your AppKit app](https://developer.apple.com/videos/play/wwdc2026/289/) (Mac counterpart)
-- [Coding Intelligence, Machine Learning & AI Group Lab](https://developer.apple.com/videos/play/wwdc2026/8121/)
+- **Core:** [Modernize your UIKit app](https://developer.apple.com/videos/play/wwdc2026/278/) — resizable iPhone apps, `UIRequiresFullScreen` changes, scene geometry
+- Supporting: [What's new in SwiftUI](https://developer.apple.com/videos/play/wwdc2026/269/) · [Get the most out of Device Hub](https://developer.apple.com/videos/play/wwdc2026/260/) · [What's new in Xcode 27](https://developer.apple.com/videos/play/wwdc2026/258/) · [Xcode, agents, and you](https://developer.apple.com/videos/play/wwdc2026/259/) · [Build a responsive camera app that launches quickly](https://developer.apple.com/videos/play/wwdc2026/303/) · [Support the Center Stage front camera](https://developer.apple.com/videos/play/wwdc2026/341/) · [Enhance your presence on the App Store](https://developer.apple.com/videos/play/wwdc2026/205/)
 
 ### Earlier background
 - [Make your UIKit app more flexible (WWDC25)](https://developer.apple.com/videos/play/wwdc2025/282/)
@@ -159,11 +169,11 @@ _Last updated: 2026-10-10. Apple URLs are relative to `https://developer.apple.c
 
 ## 6. Tools
 
-- **Xcode 27.1** (beta 27A9269 from 2026-09-18; RC listed on the hub) — [Downloads](https://developer.apple.com/download/applications/) · [Xcode](https://developer.apple.com/xcode/). Requires Apple silicon Mac, macOS 26.6+.
+- **Xcode 27.1 RC** (first beta 27A9269 on 2026-09-18) — [Downloads](https://developer.apple.com/download/applications/) · [Xcode](https://developer.apple.com/xcode/). Requires Apple silicon Mac, macOS 26.6+.
 - **iPhone Duo simulator** in Device Hub — open/close/fold/rotate controls; hold ⌥ for a hinge-angle slider. Appears only with the iOS 27.1 runtime (Xcode → Settings → Components).
 - **Resizable iOS simulator** (Xcode 27) and **SwiftUI preview resize handles**
 - **iPhone Mirroring** on macOS 27 — resize the window to extreme sizes
-- **App Resizability agent skill** (Xcode 27.1; formerly "App Modernization", WWDC26) — `xcrun agent skills export`
+- **Xcode's built-in agent skills** — export with `xcrun agent skills export --output-dir <dir>`. Xcode 27.0 exports `uikit-app-modernization` (UIScreen, orientation, scene lifecycle, safe areas) and `swiftui-whats-new-27` (incl. `references/toolbar.md`), among others. Snapshots in [reference/apple-xcode-skills/](reference/apple-xcode-skills/). Apple's prepare page names the 27.1 skill **"App Resizability"** (prompt: "get my app ready for iPhone Duo"); its content isn't published and the "formerly App Modernization" lineage is **unverified**. Our skill must complement, not duplicate, these.
 - **Design kits**: [Apple Design Resources](https://developer.apple.com/design/resources/) (Figma + Sketch iPhone Duo kits)
 - **App Store Connect preview tool** — preview screenshots/metadata on iPhone Duo
 
@@ -195,47 +205,50 @@ _Last updated: 2026-10-10. Apple URLs are relative to `https://developer.apple.c
 
 ## 9. Third-party coverage (verify against Apple)
 
-### News
+### News (only items that add something beyond Apple's posts)
 - MacRumors — [Apple Announces iPhone Duo Apps Can Now Be Submitted to App Store](https://www.macrumors.com/2026/10/05/apple-opens-iphone-duo-app-submissions/) (2026-10-05)
 - 9to5Mac — [Apple invites developers to submit iPhone Duo-ready apps](https://9to5mac.com/2026/10/05/apple-invites-developers-to-submit-iphone-duo-ready-apps-to-the-app-store/) (2026-10-05)
-- AppleInsider — [Developers can now submit iPhone Duo apps & hope for approval in time](https://appleinsider.com/articles/26/10/06/developers-can-now-submit-iphone-duo-apps-hope-for-approved-in-time) (2026-10-06)
-- AppleInsider — [Xcode 27.1 beta adds iPhone Duo development tools](https://appleinsider.com/articles/26/09/18/developers-finally-get-xcode-tools-to-prepare-apps-for-iphone-duo) (2026-09-18)
-- The Mac Observer — [Apple Will Require iPhone Duo Screenshots for App Submissions in 2027](https://www.macobserver.com/news/iphone-duo-screenshots-required-app-submissions-2027/)
-- The Mac Observer — [iPhone Duo Ships in October. Apple's Next App Rule Waits Until April 2027](https://www.macobserver.com/news/iphone-duo-app-store-sdk-rule-april-2027/)
 - InfoQ — [What iOS Developers Need to Change to Prepare for the iPhone Duo](https://www.infoq.com/news/2026/09/apple-iphone-duo-api/)
-- Gadget Hacks — [iPhone Duo App Submissions: What Developers Need to Know](https://apple.gadgethacks.com/news/iphone-duo-app-submissions-what-developers-need-to-know/) · [Update Timeline: What's Confirmed](https://apple.gadgethacks.com/news/iphone-duo-app-developer-update-timeline-whats-confirmed/)
-- Yahoo Tech — [Apple Now Accepting iPhone Duo App Store Submissions](https://tech.yahoo.com/ai/apple-intelligence/articles/apple-now-accepting-iphone-duo-151659828.html)
-- Gadget Review — [Apple Now Accepting iPhone Duo App Store Submissions](https://www.gadgetreview.com/apple-now-accepting-iphone-duo-app-store-submissions)
-- iPhoneSoft (FR) — [Xcode 27.1 bêta disponible avec le simulateur iPhone Duo](https://iphonesoft.fr/2026/09/18/xcode-27-1-beta-disponible-simulateur-iphone-duo)
-- MacRumors — [iOS 27 Hints at Foldable iPhone With App Resizability Push](https://www.macrumors.com/2026/06/08/ios-27-hints-at-foldable-iphone-with-app-resizability-push/) (pre-announcement context)
 
 ### Tutorials & deep dives
 - SwiftLee — [iPhone Duo Simulator: Testing and optimizing your SwiftUI app](https://www.avanderlee.com/swiftui/iphone-duo-simulator/) (2026-09-22)
-- Blake Crosley — [Xcode 27.1 Beta: Your App in the iPhone Duo Simulator](https://blakecrosley.com/blog/xcode-27-1-beta-iphone-duo-simulator) · [The Resizable iPhone Era: Ready Your App Before September](https://blakecrosley.com/blog/resizable-iphone-era-checklist)
+- Blake Crosley — [Xcode 27.1 Beta: Your App in the iPhone Duo Simulator](https://blakecrosley.com/blog/xcode-27-1-beta-iphone-duo-simulator)
 - The Swift Dev — [Prepare Your SwiftUI App For iPhone Duo](https://www.theswift.dev/posts/prepare-your-swiftui-app-for-iphone-duo/)
 - Livsy Code — [Building iPhone Duo Layouts with ArrangementView](https://livsycode.com/swiftui/building-iphone-duo-layouts-with-arrangementview/)
 - BleepingSwift — [Building Fold-Aware Layouts with ArrangementView](https://bleepingswift.com/blog/arrangementview-swiftui-iphone-duo) · [Keeping Content Clear of the Fold with ReservedRegion](https://bleepingswift.com/blog/reservedregion-swiftui-iphone-duo-fold)
 - onmyway133 — [How to adapt layout for iPhone Duo](https://github.com/onmyway133/blog/issues/1062)
-- ecorpit — [iPhone Duo layout: ArrangementView, reserved regions](https://ecorpit.com/iphone-duo-adaptive-layout-arrangementview-reserved-regions-2026/)
 - Fatbobman — [From Size Class to Available Space: Is horizontalSizeClass Still Reliable?](https://fatbobman.com/en/posts/from-size-class-to-available-space/)
 - DEV Community — [iPhone Duo for iOS Developers: What Actually Changes in Your Swift Code](https://dev.to/arshtechpro/iphone-duo-for-ios-developers-what-actually-changes-in-your-swift-code-5gc5)
-- Pasquale Pillitteri — [iPhone Duo Apps: What Changes in Your Code](https://pasqualepillitteri.it/en/news/15360/iphone-duo-prepare-apps-developers)
-- Appwrite — [iPhone Duo: what's new and what developers can build](https://appwrite.io/blog/post/phone-duo-whats-new-and-what-developers-can-build)
-- Medium — [iPhone Duo Developer Guide: How to Build and Upgrade iOS Apps](https://medium.com/@expertappdevs/iphone-duo-developer-guide-how-to-build-and-upgrade-ios-apps-d7a6e44be17d)
-- Substack — [Devs for Devs: Preparing Your Apps for iOS 27](https://thosewhoswift.substack.com/p/devs-for-devs-preparing-your-apps)
 - WWDC Index — [Modernize your UIKit app (transcript index)](https://nonstrict.eu/wwdcindex/wwdc2026/278/)
 
 ### Sample code
 - [artemnovichkov/iPhone-Duo-by-Examples](https://github.com/artemnovichkov/iPhone-Duo-by-Examples) — SwiftUI samples for hinge, reserved regions, ArrangementView, vertical toolbar, container margins (MIT)
+- [BleepingSwift/iphone-duo-split-view-left-or-right](https://github.com/BleepingSwift/iphone-duo-split-view-left-or-right) — detecting which side of Split View the app is on
+- [TarunYadgirkar/duo-test](https://github.com/TarunYadgirkar/duo-test) — test app
+
+### Peer skills (review for differentiation before writing ours)
+- [mirzaaghazadeh/iphone-duo-skills](https://github.com/mirzaaghazadeh/iphone-duo-skills) (~149★, 2026-10-07)
+- [dogfooter8750/iphone-duo-skill](https://github.com/dogfooter8750/iphone-duo-skill)
+- Axiom `axiom-audit-resize` (tessl.io registry)
+- agensi.io "iPhone Duo Adaptivity Audit" (paid)
+- Apple's own Xcode skills — see §6 and [reference/apple-xcode-skills/](reference/apple-xcode-skills/)
 
 ---
 
 ## 10. Known gotchas collected so far
 
-- The inner display is regular × regular and **ignores `supportedInterfaceOrientations`**; the outer display behaves like a normal iPhone.
-- `UIRequiresFullScreen` is still honored, but the app still resizes on open/close.
+- The inner display is regular × regular and **ignores `supportedInterfaceOrientations`**; the outer display behaves like a normal iPhone. _(Source: "Prepare your app for iPhone Duo" talk, "Use size classes" chapter ~2:46 — not in the written docs.)_
+- `UIRequiresFullScreen`: the Duo talk says it is still honored but the app still resizes on open/close; third parties say since iOS 27 it no longer opts out of resizing and instead enables discrete resizing honoring supported orientations. **Unverified — confirm against WWDC26 session 278 before putting in the skill.**
 - Safe areas are **asymmetric** (vertical bars sit on one edge) — use `bounds.inset(by: safeAreaInsets)`, never `left * 2`.
 - New windows can only be created on the inner display.
 - Hinge angle is for effects, never for layout.
 - Simulator cannot test camera transitions, outer-display capture accessories, haptics, reachability or performance — use hardware.
 - ArrangementView / reserved regions / hinge / vertical-bar APIs need the iOS 27.1 SDK; the 27.0 SDK won't compile them. Keep `#available` fallbacks.
+
+## 11. Known unknowns (no Apple guidance found yet — the skill must not invent any)
+
+- Games: Metal / GameController / touch controls on iPhone Duo (only the HIG "fill the screen, prefer aspect change over letterboxing" line)
+- Widgets, Live Activities and Dynamic Island on the outer display
+- App Clips and app extensions (simulator can't run most extensions)
+- Right-to-left layouts with vertical bars (HIG: bars stay on the same hardware side; reserved-region frames are mirrored unless `.fixed`)
+- Keyboard / text input around the fold
