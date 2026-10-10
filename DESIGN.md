@@ -41,7 +41,7 @@ Taken from Apple's skills that ship with Xcode 27.0. Apple's content is not repr
 **Frontmatter**
 - `name` matches the folder.
 - `description` lists trigger symbols, APIs and user phrasings, has a `SKIP:` list, and names sibling skills.
-- Include `effort: high`.
+- Apple uses `effort: high`; the open Agent Skills spec doesn't allow that key, so it lives under `metadata`. The description stays under 1,024 characters.
 
 **SKILL.md sections, in order**
 1. Grounding line: public API only; never invent API.
@@ -155,13 +155,15 @@ The skill reports these as needing a physical iPhone Duo.
 
 ---
 
-## 7. Planned file structure
+## 7. File structure
 
 ```
 iphone-duo-adaptive/
 ├── SKILL.md                         workflow, principles, task registry, failure modes
 ├── references/
+│   ├── workflow.md                  phase-by-phase instructions (read before Phase 0)
 │   ├── apple-skills-bridge.md       export Apple skills, routing, fallbacks
+│   ├── resizing-task.md             fallback resizing fundamentals when Apple's skills are unavailable
 │   ├── api-facts.md                 verified API table with availability; known unknowns
 │   ├── decisions.md                 question bank, heuristics, mockup templates
 │   ├── simulator.md                 pose matrix, commands, user instructions, limits
@@ -173,7 +175,7 @@ iphone-duo-adaptive/
 │   ├── camera-task.md               direction coordinator, rotation, accessories
 │   └── special-cases.md             games, hinge effects, scenes, cross-platform (out of scope)
 ├── scripts/
-│   ├── preflight.sh                 environment and project facts as JSON
+│   ├── preflight.py                 environment and project facts as JSON
 │   ├── export_apple_skills.sh       export Apple skills; non-zero exit → fallback
 │   ├── audit.py                     anti-patterns and screen inventory with file:line
 │   ├── capture.sh                   build, install, launch, screenshot per pose

@@ -4,7 +4,7 @@ An **interactive** agent skill for Claude Code and other agent-skill–compatibl
 
 The skill builds your app, screenshots it on the outer and inner displays in every pose, and asks you the design questions only you can answer. Then it makes the changes and proves they work.
 
-> **Status:** in design. The research ([RESOURCES.md](RESOURCES.md)) and the specification ([DESIGN.md](DESIGN.md)) are done, and `SKILL.md` is being written. The sections below describe the planned behaviour.
+> **Status:** first version (0.1). The skill is written, and its scripts have been tested on sample code. It has **not yet been run end to end** against a real app on the iPhone Duo simulator, which needs Xcode 27.1. Expect rough edges, and please report them.
 
 ## What it does
 
@@ -71,7 +71,19 @@ Apple provides no command-line way to fold the iPhone Duo simulator. Only Device
 - macOS on Apple silicon with **Xcode 27.1** or later (needed for the iPhone Duo simulator and the iOS 27.1 SDK). Older Xcode versions work in a limited mode: code audit and fixes only.
 - An iOS project in UIKit, SwiftUI or both. Flutter, React Native and other cross-platform frameworks are out of scope.
 
+## Install
+
+Copy the skill folder into your Claude Code skills directory (personal or per project):
+
+```bash
+git clone https://github.com/MustafaNatur/iphone-duo-adaptive-skill.git
+cp -R iphone-duo-adaptive-skill/iphone-duo-adaptive ~/.claude/skills/
+```
+
+Then, in your iOS project, ask: *"Get my app ready for iPhone Duo."*
+
 ## Repository contents
 
+- [iphone-duo-adaptive/](iphone-duo-adaptive/): the skill. `SKILL.md`, task and reference files, helper scripts, and plan/decision templates.
 - [DESIGN.md](DESIGN.md): the skill's specification. Workflow, Apple conventions, decision questions, simulator strategy, file structure, failure modes.
 - [RESOURCES.md](RESOURCES.md): all research sources. Apple news, docs, design guidelines, API reference, Tech Talks, WWDC26 sessions, tools, App Store specs, labs, third-party coverage, peer skills, and known unknowns.
